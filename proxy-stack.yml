@@ -1,0 +1,82 @@
+version: '3.4'
+
+services:
+    nginx:
+        image: mwatelescope/nginx
+        environment:
+            - NGINX_HTTPS_CERT_FILE=/run/secrets/nginx_https_cert_file
+            - NGINX_HTTPS_KEY_FILE=/run/secrets/nginx_https_key_file
+            - NGINX_DH_PARAM_FILE=/run/secrets/nginx_dh_param_file
+            - SATOSA_HOST=satosa
+            - SATOSA_PORT=8080
+        secrets:
+            - nginx_https_cert_file
+            - nginx_https_key_file
+            - nginx_dh_param_file
+        networks:
+            - default
+        ports:
+            - target: 443
+              published: 443
+              protocol: tcp
+              # 'host' mode is necessary for nginx to receive the browser IP address
+              # instead of the ingress network IP address. This is only a useful workaround
+              # when not truly leveraging the load balancing capabilities of swarm mode.
+              # Normally with more than a single mode swarm the upstream load balancer in
+              # front of the swarm would be used for the definitive access log.
+              # See discussion at https://github.com/moby/moby/issues/25526 .
+              mode: host
+            - target: 80
+              published: 80
+              protocol: tcp
+              mode: host
+        deploy:
+            replicas: 1
+
+    satosa:
+        image: mwatelescope/satosa
+        volumes:
+            - /srv/docker/etc/satosa/metadata:/etc/satosa/metadata
+        environment:
+            - SATOSA_LDAP_BIND_PASSWORD_FILE=/run/secrets/satosa_ldap_bind_password
+            - SATOSA_FRONTEND_CERT_FILE=/run/secrets/satosa_frontend_cert_file
+            - SATOSA_FRONTEND_KEY_FILE=/run/secrets/satosa_frontend_key_file
+            - SATOSA_BACKEND_CERT_FILE=/run/secrets/satosa_backend_cert_file
+            - SATOSA_BACKEND_KEY_FILE=/run/secrets/satosa_backend_key_file
+            - SATOSA_STATE_ENCRYPTION_KEY_FILE=/run/secrets/satosa_state_encryption_key
+            - SATOSA_USER_ID_HASH_SALT_FILE=/run/secrets/satosa_user_id_hash_salt
+            - PROXY_PORT=8080
+        secrets:
+            - satosa_ldap_bind_password
+            - satosa_frontend_cert_file
+            - satosa_frontend_key_file
+            - satosa_backend_cert_file
+            - satosa_backend_key_file
+            - satosa_state_encryption_key
+            - satosa_user_id_hash_salt
+        networks:
+            - default
+        deploy:
+            replicas: 1
+
+secrets:
+    nginx_https_cert_file:
+        external: true
+    nginx_https_key_file:
+        external: true
+    nginx_dh_param_file:
+        external: true
+    satosa_ldap_bind_password:
+        external: true
+    satosa_frontend_cert_file:
+        external: true
+    satosa_frontend_key_file:
+        external: true
+    satosa_backend_cert_file:
+        external: true
+    satosa_backend_key_file:
+        external: true
+    satosa_state_encryption_key:
+        external: true
+    satosa_user_id_hash_salt:
+        external: true

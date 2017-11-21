@@ -1,0 +1,17 @@
+module: primary_identifier.PrimaryIdentifier
+name: PrimaryIdentifier
+config:
+    ordered_identifier_candidates:
+        - attribute_names: [epuid]
+        - attribute_names: [eppn, name_id]
+          name_id_format: urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+        - attribute_names: [eppn, edupersontargetedid]
+        - attribute_names: [eppn]
+        - attribute_names: [name_id]
+          name_id_format: urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+          add_scope: issuer_entityid
+        - attribute_names: [edupersontargetedid]
+          add_scope: issuer_entityid
+    clear_input_attributes: no
+    primary_identifier: uid
+    on_error: https://registry.mwatelescope.org/registry/collaboration_error/co_collaboration_error_primary_identifier_errors/handle/co:2

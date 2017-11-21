@@ -1,0 +1,58 @@
+BASE:
+  https://proxy.mwatelescope.org
+
+INTERNAL_ATTRIBUTES:
+  "/etc/satosa/internal_attributes.yaml"
+
+COOKIE_STATE_NAME: "SATOSA_STATE"
+
+CUSTOM_PLUGIN_MODULE_PATHS: 
+  - "/etc/satosa/plugins/src"
+
+BACKEND_MODULES:
+  - "/etc/satosa/plugins/saml2_backend.yaml"
+
+FRONTEND_MODULES:
+  - "/etc/satosa/plugins/saml2_frontend.yaml"
+  - "/etc/satosa/plugins/ping_frontend.yaml"  
+
+MICRO_SERVICES:
+  - "/etc/satosa/plugins/primary_identifier.yaml"
+  - "/etc/satosa/plugins/ldap_attribute_store.yaml"
+
+CONSENT:
+  enable: No
+
+ACCOUNT_LINKING:
+  enable: No
+
+LOGGING:
+  version: 1
+  formatters:
+    simple:
+      format: "[%(asctime)s] [%(levelname)s] [%(name)s]: %(message)s"
+  handlers:
+    console:
+      class: logging.StreamHandler
+      formatter: simple
+      stream: ext://sys.stderr
+  loggers:
+    satosa:
+      level: DEBUG
+      handlers:
+        - console
+      propagate: no
+    satosa.micro_services.ldap_attribute_store:
+      level: DEBUG
+      handlers:
+        - console
+      propagate: no
+    satosa.micro_services.primary_identifier:
+      level: DEBUG
+      handlers:
+        - console
+      propagate: no
+  root:
+    level: INFO
+    handlers: 
+      - console

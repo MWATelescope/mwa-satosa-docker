@@ -1,0 +1,23 @@
+module: ldap_attribute_store.LdapAttributeStore
+name: LdapAttributeStore
+config:
+  default:
+      ldap_url: ldaps://registry.mwatelescope.org
+      bind_dn: uid=proxy_user,ou=system,o=MWA,dc=mwatelescope,dc=org
+      bind_password: %%SATOSA_LDAP_BIND_PASSWORD%%
+      search_base: ou=people,o=MWA,dc=mwatelescope,dc=org
+      search_return_attributes:
+        sn: surname
+        givenName: givenname
+        mail: mail
+        employeeNumber: employeenumber
+        isMemberOf: ismemberof
+      ordered_identifier_candidates:
+        - attribute_names: [uid]
+      ldap_identifier_attribute: uid
+      user_id_from_attrs: 
+        - employeeNumber
+      clear_input_attributes: yes
+
+  https://registry.mwatelescope.org/shibboleth:
+    ignore: true

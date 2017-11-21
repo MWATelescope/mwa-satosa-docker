@@ -1,0 +1,44 @@
+attributes:
+  displayname:
+    saml:
+      - displayName
+
+  edupersontargetedid:
+    saml:
+      - eduPersonTargetedID
+
+  givenname:
+    saml:
+      - givenName
+
+  ismemberof:
+    saml:
+      - isMemberOf
+
+  mail:
+    saml:
+      - mail
+
+  name:
+    saml:
+      - cn
+
+  surname:
+    saml:
+      - sn
+
+  employeenumber:
+    saml:
+      - employeeNumber
+
+  eppn:
+    saml:
+      - eduPersonPrincipalName
+
+  epuid:
+    saml:
+      - eduPersonUniqueId
+
+  uid:
+    saml:
+      - uid

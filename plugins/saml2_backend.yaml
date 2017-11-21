@@ -1,0 +1,63 @@
+module:
+  satosa.backends.saml2.SAMLBackend
+
+name:
+  Saml2
+
+config:
+  sp_config:
+    accepted_time_diff: 300
+    key_file:
+      /etc/satosa/backend.key
+    cert_file:
+      /etc/satosa/backend.crt
+    organization:
+      display_name:
+        Murchison Widefield Array Telescope Project
+      name:
+        Murchison Widefield Array Telescope Project
+      url:
+        http://mwatelescope.org
+    contact_person:
+    - contact_type: technical
+      email_address: greg.sleap@curtin.edu.au
+      given_name: Greg Sleap
+    - contact_type: technical
+      email_address: greg.sleap@curtin.edu.au
+      given_name: Greg Sleap
+    metadata:
+      mdq: 
+        http://login-chooser.mwatelescope.org: /etc/satosa/mwa-metadata-signer.crt
+          #local:
+          #- /etc/satosa/metadata/aaf-metadata.xml
+          #- /etc/satosa/metadata/aaf-edugain-metadata.xml
+          #- /etc/satosa/metadata/scg-idp-metadata.xml
+
+    entityid:
+      https://proxy.mwatelescope.org/sp
+
+    attribute_map_dir: attributemaps
+
+    service:
+      sp:
+        allow_unsolicited:
+          true
+        endpoints:
+          assertion_consumer_service:
+          - [<base_url>/<name>/acs/post,
+             'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST']
+          - [<base_url>/<name>/acs/redirect,
+             'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect']
+          - [<base_url>/<name>/acs/artifact,
+             'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact']
+          discovery_response:
+          - [<base_url>/<name>/disco,
+             'urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol']
+        name_id_format:
+          'None'
+        name_id_format_allow_create: 
+          true
+          
+  # disco_srv must be defined if there is more than one IdP in the metadata specified above
+  disco_srv:
+    http://login-chooser.mwatelescope.org/role/idp.ds
