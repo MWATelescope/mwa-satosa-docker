@@ -9,6 +9,7 @@ config:
       search_return_attributes:
         sn: surname
         givenName: givenname
+        cn: displayname
         mail: mail
         employeeNumber: employeenumber
         isMemberOf: ismemberof
@@ -18,6 +19,7 @@ config:
       user_id_from_attrs: 
         - employeeNumber
       clear_input_attributes: yes
+      on_ldap_search_result_empty: https://registry.mwatelescope.org/registry/pages/public/not_enrolled
 
   https://registry.mwatelescope.org/shibboleth:
     ignore: true
