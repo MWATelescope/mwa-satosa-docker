@@ -33,6 +33,19 @@ RUN wget https://bootstrap.pypa.io/get-pip.py \
     && pip install --upgrade pysaml2 \
     && rm -rf satosa
 
+# Until a rew release of pysaml2 is available with better MDQ
+# support and the ability to support signed signed responses or
+# assertions we need to build a newer version from the repository.
+# Until the necessary pull requests are accepted we need to merge
+# them directly.
+RUN git clone https://github.com/rohe/pysaml2.git \
+    && cd pysaml2 \
+    && git -c "user.name=nobody" -c "user.email=nobody@localhost" pull --rebase origin pull/483/head \
+    && git -c "user.name=nobody" -c "user.email=nobody@localhost" pull --rebase origin pull/485/head \
+    && pip install --upgrade ./ \
+    && cd .. \
+    && rm -rf pysaml2
+
 # Download the SATOSA microservices.
 RUN wget -O satosa_microservices.tar.gz ${SATOSA_MICROSERVICES_SRC_URL} \
     && mkdir -p /opt/satosa_microservices \

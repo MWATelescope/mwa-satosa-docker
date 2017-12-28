@@ -27,11 +27,8 @@ config:
       given_name: Greg Sleap
     metadata:
       mdq: 
-        http://login-chooser.mwatelescope.org: /etc/satosa/mwa-metadata-signer.crt
-          #local:
-          #- /etc/satosa/metadata/aaf-metadata.xml
-          #- /etc/satosa/metadata/aaf-edugain-metadata.xml
-          #- /etc/satosa/metadata/scg-idp-metadata.xml
+        - url: http://login-chooser.mwatelescope.org
+          cert: /etc/satosa/mwa-metadata-signer.crt
 
     entityid:
       https://proxy.mwatelescope.org/sp
@@ -40,6 +37,12 @@ config:
 
     service:
       sp:
+        want_response_signed:
+          false
+        want_assertions_signed:
+          false
+        want_assertions_or_response_signed:
+          true
         allow_unsolicited:
           true
         endpoints:

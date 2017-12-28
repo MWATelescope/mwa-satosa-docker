@@ -25,9 +25,8 @@ config:
     cert_file: /etc/satosa/frontend.crt
     metadata:
       mdq: 
-        http://login-chooser.mwatelescope.org: /etc/satosa/mwa-metadata-signer.crt
-          #local:
-          #- /etc/satosa/metadata/mwa-registry-metadata.xml
+        - url: http://login-chooser.mwatelescope.org
+          cert: /etc/satosa/mwa-metadata-signer.crt
 
     entityid: https://proxy.mwatelescope.org/idp
 
