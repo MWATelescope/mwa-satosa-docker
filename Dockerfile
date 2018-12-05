@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
@@ -24,24 +24,22 @@ WORKDIR /tmp
 RUN wget https://bootstrap.pypa.io/get-pip.py \
     && python3 get-pip.py \
     && rm -f get-pip.py \
+    && pip install pysaml2 \
     && wget -O satosa.tar.gz ${SATOSA_SRC_URL} \
     && mkdir -p /tmp/satosa \
     && tar -zxf satosa.tar.gz -C /tmp/satosa --strip-components=1 \
     && rm -f satosa.tar.gz \
     && pip install ./satosa \
     && pip install ldap3 \
-    && pip install --upgrade pysaml2 \
     && rm -rf satosa
 
 # Until a rew release of pysaml2 is available with better MDQ
-# support and the ability to support signed signed responses or
-# assertions we need to build a newer version from the repository.
-# Until the necessary pull requests are accepted we need to merge
-# them directly.
+# support  we need to build a newer version from the repository.
+# Until the necessary pull request is accepted we need to merge
+# it directly.
 RUN git clone https://github.com/rohe/pysaml2.git \
     && cd pysaml2 \
     && git -c "user.name=nobody" -c "user.email=nobody@localhost" pull --rebase origin pull/483/head \
-    && git -c "user.name=nobody" -c "user.email=nobody@localhost" pull --rebase origin pull/485/head \
     && pip install --upgrade ./ \
     && cd .. \
     && rm -rf pysaml2
