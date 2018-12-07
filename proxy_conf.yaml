@@ -37,6 +37,14 @@ LOGGING:
       formatter: simple
       stream: ext://sys.stderr
   loggers:
+    ldap3:
+      level: DEBUG
+      handlers:
+        - console
+    saml2:
+      level: DEBUG
+      handlers:
+        - console
     satosa:
       level: DEBUG
       handlers:
