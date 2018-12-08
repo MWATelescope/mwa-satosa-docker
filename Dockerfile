@@ -11,38 +11,27 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         wget \
         ca-certificates
 
-# Use the head of the master branch of the official SATOSA repository.
-ENV SATOSA_SRC_URL=https://github.com/IdentityPython/SATOSA/archive/master.tar.gz
+# Pull request 200 for SATOSA fixes an issue when the authenticating
+# IdP does not send a <NameID>.
+ENV SATOSA_SRC_URL=git+https://github.com/IdentityPython/SATOSA.git@refs/pull/200/merge
+
+# Pull request 483 for pysaml2 adds signature checking on metadata 
+# retrieved from a MDQ server.
+ENV PYSAML2_SRC_URL=git+https://github.com/IdentityPython/pysaml2.git@refs/pull/483/merge
 
 # Use the head of the master branch of the official SATOSA microservices repository.
 ENV SATOSA_MICROSERVICES_SRC_URL=https://github.com/IdentityPython/satosa_microservices/archive/master.tar.gz
 
 WORKDIR /tmp
 
-# Download the latest pip and use it to install SATOSA and then
-# upgrade pySAML.
+# Download the latest pip and use it to install pysaml2,
+# SATOSA and the ldap3 module.
 RUN wget https://bootstrap.pypa.io/get-pip.py \
     && python3 get-pip.py \
     && rm -f get-pip.py \
-    && pip install pysaml2 \
-    && wget -O satosa.tar.gz ${SATOSA_SRC_URL} \
-    && mkdir -p /tmp/satosa \
-    && tar -zxf satosa.tar.gz -C /tmp/satosa --strip-components=1 \
-    && rm -f satosa.tar.gz \
-    && pip install ./satosa \
+    && pip install ${PYSAML2_SRC_URL} \
     && pip install ldap3 \
-    && rm -rf satosa
-
-# Until a rew release of pysaml2 is available with better MDQ
-# support  we need to build a newer version from the repository.
-# Until the necessary pull request is accepted we need to merge
-# it directly.
-RUN git clone https://github.com/rohe/pysaml2.git \
-    && cd pysaml2 \
-    && git -c "user.name=nobody" -c "user.email=nobody@localhost" pull --rebase origin pull/483/head \
-    && pip install --upgrade ./ \
-    && cd .. \
-    && rm -rf pysaml2
+    && pip install ${SATOSA_SRC_URL}
 
 # Download the SATOSA microservices.
 RUN wget -O satosa_microservices.tar.gz ${SATOSA_MICROSERVICES_SRC_URL} \
