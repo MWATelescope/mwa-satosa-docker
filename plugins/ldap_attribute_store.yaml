@@ -22,4 +22,10 @@ config:
       on_ldap_search_result_empty: https://registry.mwatelescope.org/registry/pages/public/not_enrolled
 
   https://registry.mwatelescope.org/shibboleth:
-    ignore: true
+      ignore: true
+
+  https://asvo.mwatelescope.org/sp:
+      on_ldap_search_result_empty: https://registry.mwatelescope.org/registry/co_petitions/start/coef:34
+
+  https://test-asvo.mwatelescope.org/sp:
+      on_ldap_search_result_empty: https://registry.mwatelescope.org/registry/co_petitions/start/coef:34
