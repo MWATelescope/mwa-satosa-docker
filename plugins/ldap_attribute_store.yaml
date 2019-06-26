@@ -1,4 +1,4 @@
-module: ldap_attribute_store.LdapAttributeStore
+module: satosa.micro_services.ldap_attribute_store.LdapAttributeStore
 name: LdapAttributeStore
 config:
   default:
