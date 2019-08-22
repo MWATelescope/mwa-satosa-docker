@@ -34,7 +34,7 @@ services:
             replicas: 1
 
     satosa:
-        image: mwatelescope/satosa:a81160
+        image: mwatelescope/satosa:07d1ae
         environment:
             - SATOSA_LDAP_BIND_PASSWORD_FILE=/run/secrets/satosa_ldap_bind_password
             - SATOSA_FRONTEND_CERT_FILE=/run/secrets/satosa_frontend_cert_file
