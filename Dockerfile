@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
@@ -11,8 +11,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         wget \
         ca-certificates
 
-# Use a particular commit from the head of master on June 26, 2019
-ENV SATOSA_SRC_URL=git+https://github.com/IdentityPython/SATOSA.git@f53bbd45faeb35b3db5007186e911150e9192e1e
+# Until PR 653 for pysaml2 is merged install from the PR.
+ENV PYSAML2_SRC_URL=git+https://github.com/IdentityPython/pysaml2@refs/pull/653/merge
+
+# Use a particular commit from the head of master on November 25, 2019
+ENV SATOSA_SRC_URL=git+https://github.com/IdentityPython/SATOSA.git@933c0b923c04f106894906eddcbcdfafa032c99e
 
 WORKDIR /tmp
 
@@ -21,6 +24,7 @@ WORKDIR /tmp
 RUN wget https://bootstrap.pypa.io/get-pip.py \
     && python3 get-pip.py \
     && rm -f get-pip.py \
+    && pip install ${PYSAML2_SRC_URL} \
     && pip install ldap3 \
     && pip install ${SATOSA_SRC_URL}
 
