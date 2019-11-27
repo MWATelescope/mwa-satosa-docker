@@ -23,7 +23,7 @@ attributes:
     saml:
       - cn
 
-  surname:
+  sn:
     saml:
       - sn
 

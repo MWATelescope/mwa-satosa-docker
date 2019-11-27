@@ -11,11 +11,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         wget \
         ca-certificates
 
-# Until PR 653 for pysaml2 is merged install from the PR.
-ENV PYSAML2_SRC_URL=git+https://github.com/IdentityPython/pysaml2@refs/pull/653/merge
+# Use a particular commit from the head of master on Novemberr 26, 2019
+ENV PYSAML2_SRC_URL=git+https://github.com/IdentityPython/pysaml2.git@2dbe481104f9acc6d408bc14c054c4f46b087a97
 
-# Use a particular commit from the head of master on November 25, 2019
-ENV SATOSA_SRC_URL=git+https://github.com/IdentityPython/SATOSA.git@933c0b923c04f106894906eddcbcdfafa032c99e
+# Until PR 313 is merged use a reference to get the code with PR 313 merged
+ENV SATOSA_SRC_URL=git+https://github.com/IdentityPython/SATOSA@refs/pull/313/merge
 
 WORKDIR /tmp
 

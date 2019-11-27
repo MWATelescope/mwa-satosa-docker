@@ -6,8 +6,15 @@ config:
       bind_dn: uid=proxy_user,ou=system,o=MWA,dc=mwatelescope,dc=org
       bind_password: %%SATOSA_LDAP_BIND_PASSWORD%%
       search_base: ou=people,o=MWA,dc=mwatelescope,dc=org
-      search_return_attributes:
-        sn: surname
+      query_return_attributes:
+        - sn
+        - givenName
+        - cn
+        - mail
+        - employeeNumber
+        - isMemberOf
+      ldap_to_internal_map:
+        sn: sn
         givenName: givenname
         cn: displayname
         mail: mail
