@@ -34,5 +34,5 @@ config:
   https://asvo.mwatelescope.org/sp:
       on_ldap_search_result_empty: https://registry.mwatelescope.org/registry/co_petitions/start/coef:34
 
-  https://test-asvo.mwatelescope.org/sp:
+  https://dev-asvo.mwatelescope.org/sp:
       on_ldap_search_result_empty: https://registry.mwatelescope.org/registry/co_petitions/start/coef:34
