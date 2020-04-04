@@ -6,6 +6,9 @@ INTERNAL_ATTRIBUTES:
 
 COOKIE_STATE_NAME: "SATOSA_STATE"
 
+cookies_samesite_compat:
+  - ["SATOSA_STATE", "SATOSA_STATE_LEGACY"]
+
 CUSTOM_PLUGIN_MODULE_PATHS: 
   - "/etc/satosa/plugins/src"
 
