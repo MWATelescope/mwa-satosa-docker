@@ -19,7 +19,7 @@ RUN wget https://bootstrap.pypa.io/get-pip.py \
     && python3 get-pip.py \
     && rm -f get-pip.py \
     && pip install ldap3 \
-    && pip install satosa==7.0.2
+    && pip install satosa==7.0.3
 
 COPY start.sh /usr/local/sbin/satosa-start.sh
 COPY proxy_conf.yaml /etc/satosa/proxy_conf.yaml
