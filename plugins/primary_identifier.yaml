@@ -15,3 +15,8 @@ config:
     clear_input_attributes: no
     primary_identifier: uid
     on_error: https://registry.mwatelescope.org/registry/collaboration_error/co_collaboration_error_primary_identifier_errors/handle/co:2
+
+    https://samlgw01.mwatelescope.org/idp:
+        ordered_identifier_candidates:
+            - attribute_names: [eppn]
+       
