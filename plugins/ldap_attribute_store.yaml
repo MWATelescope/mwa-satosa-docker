@@ -32,7 +32,7 @@ config:
       ignore: true
 
   https://asvo.mwatelescope.org/sp:
-      on_ldap_search_result_empty: https://registry.mwatelescope.org/registry/co_petitions/start/coef:34
+      on_ldap_search_result_empty: https://registry.mwatelescope.org/registry/pages/public/not_enrolled_asvo
 
   https://dev-asvo.mwatelescope.org/sp:
-      on_ldap_search_result_empty: https://registry.mwatelescope.org/registry/co_petitions/start/coef:34
+      on_ldap_search_result_empty: https://registry.mwatelescope.org/registry/pages/public/not_enrolled_asvo
